@@ -1,0 +1,3 @@
+Id_lekarza	Nazwisko	Imie	Specjalnosc	Data_urodzenia	NIP	PESEL
+23	Kadaj	Monika	laryngolog	1965-03-16	879-122-69-94	65031687654
+25	Kordylewski	Michal	nefrolog	1970-01-13	567-098-55-66	70011345567
