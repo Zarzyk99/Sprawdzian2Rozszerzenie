@@ -9,7 +9,6 @@ import pl.kurs.clinicapp.models.Patient;
 import pl.kurs.clinicapp.repository.IPatientRepository;
 import pl.kurs.clinicapp.services.PatientService;
 
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
