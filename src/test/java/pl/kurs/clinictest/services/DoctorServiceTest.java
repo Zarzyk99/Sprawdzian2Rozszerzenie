@@ -13,11 +13,10 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class DoctorServiceTest {
-    @Mock
-    private IDoctorRepository doctorRepository;
-
     @InjectMocks
     DoctorService doctorService;
+    @Mock
+    private IDoctorRepository doctorRepository;
 
     @Test
     void testSaveDoctor() {

@@ -1,9 +1,9 @@
 package pl.kurs.clinicapp.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -21,14 +21,25 @@ public class Visit implements Serializable {
     private Integer id;
     private LocalDate visitDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "patient_id")
     @JsonBackReference
     private Patient patient;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne()
     @JoinColumn(name = "doctor_id")
     @JsonBackReference
     private Doctor doctor;
 
+    public Visit(Integer id, LocalDate visitDate, Doctor doctor) {
+        this.id = id;
+        this.visitDate = visitDate;
+        this.doctor = doctor;
+    }
+
+    public Visit(LocalDate visitDate, Patient patient, Doctor doctor) {
+        this.visitDate = visitDate;
+        this.patient = patient;
+        this.doctor = doctor;
+    }
 }

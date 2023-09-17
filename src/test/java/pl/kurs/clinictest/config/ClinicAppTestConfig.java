@@ -1,6 +1,9 @@
 package pl.kurs.clinictest.config;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import pl.kurs.clinicapp.repository.IVisitRepository;
 import pl.kurs.clinictest.mocks.VisitRepositoryMock;
 
@@ -9,7 +12,7 @@ import pl.kurs.clinictest.mocks.VisitRepositoryMock;
 @PropertySource("classpath:application-test.properties")
 public class ClinicAppTestConfig {
 
-//    @Bean
+    //    @Bean
     @Primary
     public IVisitRepository visitRepository() {
         return new VisitRepositoryMock();

@@ -26,8 +26,6 @@ class DataParserServiceTest {
     void testParseDoctor() throws IOException {
 
         List<Doctor> doctors = dataParserService.parseDoctors("lekarze.txt");
-        System.out.println(doctors.size());
-        System.out.println(doctors);
         assertEquals(5, doctors.size());
         Doctor doctor = doctors.get(0);
         assertEquals(23, doctor.getId());

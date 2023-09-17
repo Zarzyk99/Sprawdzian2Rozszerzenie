@@ -39,7 +39,6 @@ public class DevConfiguration {
     @Bean(initMethod = "start", destroyMethod = "stop")
     public Server h2Server() throws SQLException {
         Server tcpServer = Server.createWebServer();
-        System.out.println(tcpServer.getURL());
         return tcpServer;
     }
 

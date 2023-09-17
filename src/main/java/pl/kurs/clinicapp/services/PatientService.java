@@ -1,8 +1,8 @@
 package pl.kurs.clinicapp.services;
 
 import org.springframework.stereotype.Service;
-import pl.kurs.clinicapp.repository.IPatientRepository;
 import pl.kurs.clinicapp.models.Patient;
+import pl.kurs.clinicapp.repository.IPatientRepository;
 
 import java.util.Optional;
 

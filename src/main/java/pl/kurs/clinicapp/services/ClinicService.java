@@ -8,6 +8,7 @@ import pl.kurs.clinicapp.repository.IPatientRepository;
 import pl.kurs.clinicapp.repository.IVisitRepository;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -18,11 +19,14 @@ public class ClinicService implements IClinicService {
     private final IVisitRepository visitRepository;
 
     @Override
-    public Optional<Visit> findNearestAppointment(Integer doctorId, LocalDate date) {
+    public LocalDate findNearestPossibleAppointmentDate(Integer doctorId, LocalDate date) {
         doctorService.findById(doctorId);
 
         return visitRepository.findByDoctorIdAndVisitDateLessThanEqualOrderByVisitDateDesc(doctorId, date)
-                .stream().findFirst();
+                .stream().max(Comparator.comparing(Visit::getVisitDate))
+                .map(Visit::getVisitDate)
+                .map(d -> d.plusDays(1))
+                .orElse(date);
     }
 
     @Override

@@ -17,7 +17,6 @@ import pl.kurs.clinicapp.services.IVisitService;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Configuration
 @ComponentScan(basePackages = "pl.kurs.clinicapp")
@@ -78,15 +77,15 @@ public class Main {
 
         IVisitRepository visitRepository = context.getBean(IVisitRepository.class);
 
-        Optional<Visit> visitBox = clinicService.findNearestAppointment(1, LocalDate.now());
-
-        Optional<Visit> nearestAppointment = clinicService.findNearestAppointment(1, LocalDate.now());
-
-        System.out.println(nearestAppointment);
-
-        System.out.println(patientService.findById(1));
-
-        System.out.println(visitBox);
+//        Optional<LocalDate> visitBox = clinicService.findNearestPossibleAppointmentDate(1, LocalDate.now());
+//
+//        Optional<Visit> nearestAppointment = clinicService.findNearestPossibleAppointmentDate(1, LocalDate.now());
+//
+//        System.out.println(nearestAppointment);
+//
+//        System.out.println(patientService.findById(1));
+//
+//        System.out.println(visitBox);
 
         session.getTransaction().commit();
         session.close();

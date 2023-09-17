@@ -20,13 +20,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DataParserService implements IDataParserService {
-    private final ResourceLoader resourceLoader;
-
     private static final DateTimeFormatter DATE_FORMATTER = new DateTimeFormatterBuilder()
             .appendOptional(DateTimeFormatter.ISO_DATE)
             .appendOptional(DateTimeFormatter.ofPattern("yyyy-M-dd"))
             .appendOptional(DateTimeFormatter.ofPattern("yyyy-M-d"))
-          .toFormatter();
+            .toFormatter();
+    private final ResourceLoader resourceLoader;
 
     public List<Doctor> parseDoctors(String filePath) throws IOException {
         List<Doctor> doctors = new ArrayList<>();

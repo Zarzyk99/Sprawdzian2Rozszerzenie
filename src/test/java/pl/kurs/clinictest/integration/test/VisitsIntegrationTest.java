@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import pl.kurs.clinicapp.exceptions.InvalidVisitDateException;
 import pl.kurs.clinicapp.models.Visit;
 import pl.kurs.clinicapp.repository.IDoctorRepository;
 import pl.kurs.clinicapp.repository.IPatientRepository;
@@ -14,12 +15,10 @@ import pl.kurs.clinicapp.repository.IVisitRepository;
 import pl.kurs.clinicapp.services.IDoctorService;
 import pl.kurs.clinicapp.services.IPatientService;
 import pl.kurs.clinicapp.services.IVisitService;
-import pl.kurs.clinicapp.services.VisitService;
 import pl.kurs.clinictest.config.ClinicAppTestConfig;
 
-import java.util.function.BooleanSupplier;
+import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static pl.kurs.clinictest.fixtures.TestDataFixtures.doctors;
 import static pl.kurs.clinictest.fixtures.TestDataFixtures.patients;
@@ -59,12 +58,19 @@ class VisitsIntegrationTest {
     }
 
     @Test
-    void logicTestEtc() {
+    void shouldSave() {
         // given
         final var doctor = doctorService.findById(1);
         Assertions.assertFalse(doctor.isEmpty());
 
-        final var visit = Visit.builder().id(1).doctor(doctor.get()).build();
+        final var patient = patientService.findById(1);
+        Assertions.assertFalse(patient.isEmpty());
+
+        final var visit = Visit.builder().id(1)
+                .doctor(doctor.get())
+                .patient(patient.get())
+                .visitDate(LocalDate.now())
+                .build();
 
         // when
         visitService.saveVisit(visit);
@@ -74,9 +80,24 @@ class VisitsIntegrationTest {
         Assertions.assertFalse(visitBox.isEmpty());
     }
 
-//    @Test
-//    void shouldThrowExceptionWhenVisitIsNull(){
-//        IllegalArgumentException illegalArgumentException = Assertions.assertThrows(IllegalArgumentException.class, () -> visitService.saveVisit(null));
-//        Assertions.assertTrue((BooleanSupplier) illegalArgumentException);
-//    }
+    @Test
+    void shouldNotSavePastVisit() {
+        // given
+        final var doctor = doctorService.findById(1);
+        Assertions.assertFalse(doctor.isEmpty());
+
+        final var patient = patientService.findById(1);
+        Assertions.assertFalse(patient.isEmpty());
+
+        final var visit = Visit.builder().id(1)
+                .doctor(doctor.get())
+                .patient(patient.get())
+                .visitDate(LocalDate.now().minusMonths(100))
+                .build();
+
+
+        Assertions.assertThrows(InvalidVisitDateException.class, () -> visitService.saveVisit(visit));
+
+    }
+
 }

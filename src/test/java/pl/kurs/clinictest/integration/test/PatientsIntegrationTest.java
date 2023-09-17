@@ -23,6 +23,13 @@ public class PatientsIntegrationTest {
     @Autowired
     private IPatientService patientService;
 
+    public static Stream<Arguments> shouldStorePatientsData() {
+        return Stream.of(
+                Arguments.of(TestDataFixtures.patient_1, 1),
+                Arguments.of(TestDataFixtures.patient_2, 2)
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("shouldStorePatientsData")
     void shouldStorePatients(final Patient patient, final Integer expectedPatientId) {
@@ -38,12 +45,5 @@ public class PatientsIntegrationTest {
         Assertions.assertEquals(patient.getLastName(), resultPatient.getLastName());
         Assertions.assertEquals(patient.getId(), resultPatient.getId());
 
-    }
-
-    public static Stream<Arguments> shouldStorePatientsData() {
-        return Stream.of(
-                Arguments.of(TestDataFixtures.patient_1, 1),
-                Arguments.of(TestDataFixtures.patient_2, 2)
-        );
     }
 }

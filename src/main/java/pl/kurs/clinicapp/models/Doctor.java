@@ -2,9 +2,12 @@ package pl.kurs.clinicapp.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
@@ -31,4 +34,11 @@ public class Doctor implements Serializable {
     @JsonManagedReference
     @JsonIgnore
     private Set<Visit> visits;
+
+    public Doctor(Integer id, String lastName, String firstName, String speciality) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.speciality = speciality;
+    }
 }
