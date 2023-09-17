@@ -44,10 +44,12 @@ public class DataImportService implements IDataImportService {
         }
 
         List<Visit> visits = parserService.parseVisits(visitsPath);
+        visitService.switchValidation();
 
         for (Visit visit : visits) {
             visitService.saveVisit(visit);
         }
+        visitService.switchValidation();
     }
 
 }

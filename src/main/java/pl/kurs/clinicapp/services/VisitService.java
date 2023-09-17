@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 public class VisitService implements IVisitService {
     private final IVisitRepository visitDao;
+    private boolean validationActive = true;
 
     public VisitService(IVisitRepository visitDao) {
         this.visitDao = visitDao;
@@ -18,11 +19,24 @@ public class VisitService implements IVisitService {
 
     @Override
     public void saveVisit(Visit visit) throws InvalidVisitDateException {
-        if (visit.getVisitDate().isBefore(LocalDate.now())) {
-            throw new InvalidVisitDateException();
+        if (validationActive){
+            validateVisit(visit);
         }
         visitDao.save(Optional.ofNullable(visit).orElseThrow());
     }
 
+    @Override
+    public void switchValidation() {
+        this.setValidationActive(!validationActive);
+    }
 
+    private void validateVisit(Visit visit){
+        if (visit.getVisitDate().isBefore(LocalDate.now())) {
+            throw new InvalidVisitDateException();
+        }
+    }
+
+    private void setValidationActive(boolean validationActive) {
+        this.validationActive = validationActive;
+    }
 }
